@@ -10,3 +10,11 @@ import Foundation
 struct URLConstant {
     static let BaseURL = "https://api.openweathermap.org/data/2.5"
 }
+
+extension URL {
+    static let BaseURL = "https://api.openweathermap.org/data/2.5"
+    
+    static func makeEndPointString(_ endPoint: String) -> String {
+        return BaseURL + endPoint
+    }
+}
