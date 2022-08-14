@@ -21,6 +21,7 @@
 		924B613B28A89057002804B1 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 924B613A28A89057002804B1 /* SwiftyJSON */; };
 		924B613D28A89390002804B1 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 924B613C28A89390002804B1 /* .gitignore */; };
 		924B613F28A893A6002804B1 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B613E28A893A6002804B1 /* APIKey.swift */; };
+		924B614228A8A2B5002804B1 /* CurrentWeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B614128A8A2B5002804B1 /* CurrentWeatherResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		924B613428A7D889002804B1 /* MainAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAPIManager.swift; sourceTree = "<group>"; };
 		924B613C28A89390002804B1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		924B613E28A893A6002804B1 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		924B614128A8A2B5002804B1 /* CurrentWeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 		924B612328A7D6EA002804B1 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				924B614028A8A299002804B1 /* Model */,
 				924B612528A7D6FE002804B1 /* View */,
 				924B612428A7D6F4002804B1 /* Controller */,
 			);
@@ -207,6 +210,14 @@
 				924B613428A7D889002804B1 /* MainAPIManager.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		924B614028A8A299002804B1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				924B614128A8A2B5002804B1 /* CurrentWeatherResponse.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +303,7 @@
 				924B610F28A7D6B2002804B1 /* MainViewController.swift in Sources */,
 				924B612E28A7D802002804B1 /* ReusableViewProtocol.swift in Sources */,
 				924B613F28A893A6002804B1 /* APIKey.swift in Sources */,
+				924B614228A8A2B5002804B1 /* CurrentWeatherResponse.swift in Sources */,
 				924B610B28A7D6B2002804B1 /* AppDelegate.swift in Sources */,
 				924B612B28A7D7D7002804B1 /* UIImageView+Extension.swift in Sources */,
 				924B610D28A7D6B2002804B1 /* SceneDelegate.swift in Sources */,

@@ -17,7 +17,7 @@ class MainAPIManager {
     
     private init() { }
     
-    typealias completionHandler = (JSON) -> ()
+    typealias completionHandler = ([WeatherData], (MainData)) -> ()
     
     func fetchWeatherData(latitude: Double, longtitude: Double, completionHandler: @escaping completionHandler) {
         let url = URLConstant.BaseURL + "/weather?lat=\(latitude)&lon=\(longtitude)&appid=\(APIKey.OpenWeather)"
@@ -28,16 +28,22 @@ class MainAPIManager {
                 let json = JSON(value)
                 
                 let statusCode = response.response?.statusCode ?? 500
-                
-                switch statusCode {
-                case 200:
-                    completionHandler(json)
-                case 400..<500:
-                    print("CLIENT ERROR")
-                case 500...600:
-                    print("SEVER ERROR")
-                default:
-                    print("")
+                if statusCode == 200 {
+                    let weatherList: [WeatherData] = json["weather"].arrayValue.map {
+                        WeatherData(main: $0["main"].stringValue,
+                                    description: $0["description"].stringValue,
+                                    id: $0["id"].intValue,
+                                    icon: $0["icon"].stringValue)
+                    }
+                    
+                    let mainData = MainData(tempMin: json["main"]["temp_min"].doubleValue,
+                                            feelLike: json["main"]["feels_like"].doubleValue,
+                                            humidity: json["main"]["humidity"].intValue,
+                                            pressure: json["main"]["pressure"].intValue,
+                                            temp: json["main"]["temp"].doubleValue,
+                                            tempMax: json["main"]["temp_max"].doubleValue)
+                    
+                    completionHandler(weatherList, mainData)
                 }
                 
             case .failure(let error):

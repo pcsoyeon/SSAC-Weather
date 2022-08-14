@@ -17,6 +17,9 @@ class MainViewController: UIViewController {
     private var latitude = CLLocationCoordinate2D().latitude
     private var longtitude = CLLocationCoordinate2D().longitude
     
+    private var weatherList: [WeatherData] = []
+    private var main: MainData?
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -31,8 +34,12 @@ class MainViewController: UIViewController {
     }
     
     private func callRequest(latitude: Double, longtitude: Double) {
-        MainAPIManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtitude) { value in
-            print(value)
+        MainAPIManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtitude) { weather, main in
+            print("==================== 🟡 Weather 🟡 ====================")
+            self.weatherList = weather
+            
+            print("==================== 🟢 Main 🟢 ====================")
+            self.main = main
         }
     }
 }
