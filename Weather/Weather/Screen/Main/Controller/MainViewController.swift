@@ -29,6 +29,12 @@ class MainViewController: UIViewController {
     private func setLocationManager() {
         locationManager.delegate = self
     }
+    
+    private func callRequest() {
+        MainAPIManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtitude) {
+            
+        }
+    }
 }
 
 // MARK: - Authorization
@@ -95,6 +101,9 @@ extension MainViewController: CLLocationManagerDelegate {
             latitude = coordinate.latitude
             longtitude = coordinate.longitude
         }
+        
+        callRequest()
+        
         locationManager.stopUpdatingLocation()
     }
     
