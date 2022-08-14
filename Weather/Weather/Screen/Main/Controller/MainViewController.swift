@@ -30,9 +30,9 @@ class MainViewController: UIViewController {
         locationManager.delegate = self
     }
     
-    private func callRequest() {
-        MainAPIManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtitude) {
-            
+    private func callRequest(latitude: Double, longtitude: Double) {
+        MainAPIManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtitude) { value in
+            print(value)
         }
     }
 }
@@ -100,9 +100,9 @@ extension MainViewController: CLLocationManagerDelegate {
         if let coordinate = locations.last?.coordinate {
             latitude = coordinate.latitude
             longtitude = coordinate.longitude
+            
+            callRequest(latitude: latitude, longtitude: longtitude)
         }
-        
-        callRequest()
         
         locationManager.stopUpdatingLocation()
     }

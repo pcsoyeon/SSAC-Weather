@@ -8,5 +8,5 @@
 import Foundation
 
 struct URLConstant {
-    static let BaseURL = "https://api.openweathermap.org/data/3.0"
+    static let BaseURL = "https://api.openweathermap.org/data/2.5"
 }
