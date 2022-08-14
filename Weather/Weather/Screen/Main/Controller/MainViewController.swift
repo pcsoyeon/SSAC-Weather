@@ -34,12 +34,19 @@ class MainViewController: UIViewController {
     }
     
     private func callRequest(latitude: Double, longtitude: Double) {
-        MainAPIManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtitude) { weather, main in
+        MainAPIManager.shared.fetchCurrentWeather(latitude: latitude, longtitude: longtitude) { weather, main in
             print("==================== 🟡 Weather 🟡 ====================")
             self.weatherList = weather
+            print(self.weatherList)
             
             print("==================== 🟢 Main 🟢 ====================")
             self.main = main
+            print(self.main)
+        }
+        
+        MainAPIManager.shared.fetchWeatherHistory(latitude: latitude, longtitude: longtitude) { json in
+            print("==================== 🔵 Weather History 🔵 ====================")
+            print(json)
         }
     }
 }
