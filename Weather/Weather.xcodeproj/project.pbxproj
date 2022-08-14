@@ -70,7 +70,7 @@
 			children = (
 				924B612128A7D6D6002804B1 /* Global */,
 				924B612028A7D6CB002804B1 /* Network */,
-				924B611F28A7D6C2002804B1 /* Source */,
+				924B611F28A7D6C2002804B1 /* Screen */,
 				924B611E28A7D6B8002804B1 /* Resource */,
 			);
 			path = Weather;
@@ -86,12 +86,12 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		924B611F28A7D6C2002804B1 /* Source */ = {
+		924B611F28A7D6C2002804B1 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
 				924B612328A7D6EA002804B1 /* Main */,
 			);
-			path = Source;
+			path = Screen;
 			sourceTree = "<group>";
 		};
 		924B612028A7D6CB002804B1 /* Network */ = {
