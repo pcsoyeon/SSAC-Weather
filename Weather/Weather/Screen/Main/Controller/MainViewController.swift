@@ -13,7 +13,7 @@ class MainViewController: UIViewController {
     // MARK: - UI Property
     
     @IBOutlet weak var dateAndTimeLabel: UILabel!
-    @IBOutlet weak var currentLocationLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var currentTempLabel: UILabel!
@@ -25,6 +25,8 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var weatherDetailLabel: UILabel!
     
+    @IBOutlet var stackViewCollectionView: [UIStackView]!
+    
     // MARK: - Property
     
     private let locationManager = CLLocationManager()
@@ -34,6 +36,13 @@ class MainViewController: UIViewController {
     
     private var weatherList: [WeatherData] = []
     private var main: MainData?
+    
+    private let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "MM.dd(E) HH:mm a"
+        return formatter
+    }()
     
     // MARK: - Life Cycle
     
@@ -47,10 +56,32 @@ class MainViewController: UIViewController {
     
     private func configureUI() {
         configureLabel()
+        
+        for stackview in stackViewCollectionView {
+            stackview.layer.cornerRadius = 8
+            stackview.clipsToBounds = true
+        }
     }
     
     private func configureLabel() {
+        [dateAndTimeLabel, locationLabel].forEach {
+            $0?.textColor = .darkGray
+        }
         
+        dateAndTimeLabel.text = formatter.string(from: Date())
+    }
+    
+    private func configureLocationLabel(latitude: Double, longtitude: Double) {
+        let currentLocation = CLLocation(latitude: latitude, longitude: longtitude)
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "ko_KR")
+        geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale, completionHandler: {(placemarks, error) in
+            if let address: [CLPlacemark] = placemarks {
+                if let name: String = address.last?.name {
+                    self.locationLabel.text = name
+                }
+            }
+        })
     }
     
     private func setLocationManager() {
@@ -137,6 +168,7 @@ extension MainViewController: CLLocationManagerDelegate {
             longtitude = coordinate.longitude
             
             callRequest(latitude: latitude, longtitude: longtitude)
+            configureLocationLabel(latitude: latitude, longtitude: longtitude)
         }
         
         locationManager.stopUpdatingLocation()
@@ -157,24 +189,28 @@ extension MainViewController: CLLocationManagerDelegate {
 extension MainViewController {
     private func callRequest(latitude: Double, longtitude: Double) {
         MainAPIManager.shared.fetchCurrentWeather(latitude: latitude, longtitude: longtitude) { weather, main in
-            print("==================== 🟡 Weather 🟡 ====================")
             self.weatherList = weather
-            print(self.weatherList)
             
-            print("==================== 🟢 Main 🟢 ====================")
             self.main = main
-            print(self.main)
+            guard let mainData = self.main else { return }
+            
+            DispatchQueue.main.async {
+                self.currentTempLabel.text = "\(Int(mainData.temp - 273))"
+                self.minAndMaxTempLabel.text = "\(Int(mainData.tempMin - 273)) • \(Int(mainData.tempMax - 273))"
+                
+                self.currentDustLabel.text = "미세먼지 • 초미세먼지"
+                
+                self.weatherDetailLabel.text = "\(self.weatherList[0].description.contains("rain") ? "비가 오네요" : "비는 안오지만 혹시 모르니 우산을 챙겨주세요")"
+            }
         }
         
         MainAPIManager.shared.fetchWeatherHistory(latitude: latitude, longtitude: longtitude) { value in
-            print("==================== 🔵 Weather History 🔵 ====================")
-            
             guard let main = self.main else { return }
             
             if main.temp > value {
-                print("오늘 날씨가 더 덥습니다. 🥵")
+                self.tempDescriptionLabel.text = "오늘은 어제보다 더 덥네요 🥵"
             } else {
-                print("오늘은 어제보다 선선하네요. 😙")
+                self.tempDescriptionLabel.text = "오늘은 어제보다 선선하네요 😙"
             }
         }
     }
