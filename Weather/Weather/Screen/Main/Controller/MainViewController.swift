@@ -214,9 +214,11 @@ extension MainViewController {
             guard let main = self.main else { return }
             
             if main.temp > value {
-                self.tempDescriptionLabel.text = "오늘은 어제보다 더 덥네요 ☀️"
+                self.tempDescriptionLabel.text = "어제보다 \(main.temp - value)º 높아요"
+            } else if main.temp == value {
+                self.tempDescriptionLabel.text = "어제와 비슷한 온도에요"
             } else {
-                self.tempDescriptionLabel.text = "오늘은 어제보다 선선하네요 💨"
+                self.tempDescriptionLabel.text = "어제보다 \(main.temp - value)º 낮아요"
             }
         }
         
