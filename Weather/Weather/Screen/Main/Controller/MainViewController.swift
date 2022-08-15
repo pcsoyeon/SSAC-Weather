@@ -203,8 +203,6 @@ extension MainViewController {
                 self.currentTempLabel.text = "\(Int(mainData.temp - 273))"
                 self.minAndMaxTempLabel.text = "\(Int(mainData.tempMin - 273)) • \(Int(mainData.tempMax - 273))"
                 
-                self.currentDustLabel.text = "미세먼지 • 초미세먼지"
-                
 //                self.weatherDetailLabel.text = "\(self.weatherList[0].description.contains("rain") ? "비가 오네요" : "비는 안오지만 혹시 모르니 우산을 챙겨주세요")"
                 self.weatherDetailLabel.text = self.weatherList[0].description
             }
@@ -223,7 +221,29 @@ extension MainViewController {
         }
         
         MainAPIManager.shared.fetchAirPollution(latitude: latitude, longtitude: longtitude) { airPollution in
-            print(airPollution)
+            let no2 = airPollution.no2
+            let pm10 = airPollution.pm10
+            let o3 = airPollution.o3
+            let pm25 = airPollution.pm2_5
+            
+            if (no2 < 50) && (pm10 < 25) && (o3 < 60) && (pm25 < 15) {
+                self.setDustLabel(text: "좋음")
+            } else {
+                self.setDustLabel(text: "나쁨")
+            }
         }
+    }
+    
+    private func setDustLabel(text: String) {
+        currentDustLabel.text = "미세먼지 • 초미세먼지 \(text)"
+        let attributtedString = NSMutableAttributedString(string: currentDustLabel.text!)
+        
+        if text == "좋음" {
+            attributtedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemMint, range: (currentDustLabel.text! as NSString).range(of:text))
+        } else {
+            attributtedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemOrange, range: (currentDustLabel.text! as NSString).range(of:text))
+        }
+        
+        currentDustLabel.attributedText = attributtedString
     }
 }
