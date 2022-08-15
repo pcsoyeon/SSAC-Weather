@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		922062A028AB058C004988A1 /* AirPollutionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9220629F28AB058C004988A1 /* AirPollutionResponse.swift */; };
 		924B610B28A7D6B2002804B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B610A28A7D6B2002804B1 /* AppDelegate.swift */; };
 		924B610D28A7D6B2002804B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B610C28A7D6B2002804B1 /* SceneDelegate.swift */; };
 		924B610F28A7D6B2002804B1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B610E28A7D6B2002804B1 /* MainViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9220629F28AB058C004988A1 /* AirPollutionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPollutionResponse.swift; sourceTree = "<group>"; };
 		924B610728A7D6B2002804B1 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		924B610A28A7D6B2002804B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		924B610C28A7D6B2002804B1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				924B614128A8A2B5002804B1 /* CurrentWeatherResponse.swift */,
+				9220629F28AB058C004988A1 /* AirPollutionResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922062A028AB058C004988A1 /* AirPollutionResponse.swift in Sources */,
 				924B610F28A7D6B2002804B1 /* MainViewController.swift in Sources */,
 				924B612E28A7D802002804B1 /* ReusableViewProtocol.swift in Sources */,
 				924B614428A8AB54002804B1 /* EndPoint.swift in Sources */,

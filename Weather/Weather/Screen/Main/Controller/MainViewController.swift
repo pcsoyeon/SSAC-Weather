@@ -219,5 +219,9 @@ extension MainViewController {
                 self.tempDescriptionLabel.text = "오늘은 어제보다 선선하네요 💨"
             }
         }
+        
+        MainAPIManager.shared.fetchAirPollution(latitude: latitude, longtitude: longtitude) { airPollution in
+            print(airPollution)
+        }
     }
 }

@@ -73,4 +73,34 @@ class MainAPIManager {
             }
         }
     }
+    
+    // MARK: - Weather History Data
+    
+    func fetchAirPollution(latitude: Double, longtitude: Double, completionHandler: @escaping (AirPollutionResponse) -> ()) {
+        let url = EndPoint.airPollution.requestURL + "?lat=\(latitude)&lon=\(longtitude)&appid=\(APIKey.OpenWeather)"
+        
+        AF.request(url, method: .get).validate(statusCode: 200...500).responseData { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                
+                let statusCode = response.response?.statusCode ?? 500
+                if statusCode == 200 {
+                    let data = AirPollutionResponse(co: json["list"].arrayValue[0]["components"]["co"].doubleValue,
+                                         no: json["list"].arrayValue[0]["components"]["no"].doubleValue,
+                                         no2: json["list"].arrayValue[0]["components"]["no2"].doubleValue,
+                                         o3: json["list"].arrayValue[0]["components"]["o3"].doubleValue,
+                                         so2: json["list"].arrayValue[0]["components"]["so2"].doubleValue,
+                                         pm2_5: json["list"].arrayValue[0]["components"]["pm2_5"].doubleValue,
+                                         pm10: json["list"].arrayValue[0]["components"]["pm10"].doubleValue,
+                                         nh3: json["list"].arrayValue[0]["components"]["nh3"].doubleValue)
+                    
+                    completionHandler(data)
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }

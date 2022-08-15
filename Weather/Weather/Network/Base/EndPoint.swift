@@ -10,6 +10,7 @@ import Foundation
 enum EndPoint {
     case current
     case history
+    case airPollution
     
     var requestURL: String {
         switch self {
@@ -17,6 +18,8 @@ enum EndPoint {
             return URL.makeEndPointString("/weather")
         case .history:
             return URL.makeEndPointString("/history/city")
+        case .airPollution:
+            return URL.makeEndPointString("/air_pollution")
         }
     }
 }
