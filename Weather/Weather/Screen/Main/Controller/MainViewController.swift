@@ -40,7 +40,7 @@ class MainViewController: UIViewController {
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "MM.dd(E) HH:mm a"
+        formatter.dateFormat = "MM.dd(E) a HH:mm"
         return formatter
     }()
     
@@ -66,6 +66,11 @@ class MainViewController: UIViewController {
     private func configureLabel() {
         [dateAndTimeLabel, locationLabel].forEach {
             $0?.textColor = .darkGray
+            $0?.text = "   "
+        }
+        
+        [currentTempLabel, minAndMaxTempLabel, tempDescriptionLabel, currentDustLabel, weatherDetailLabel].forEach {
+            $0?.text = "   "
         }
         
         dateAndTimeLabel.text = formatter.string(from: Date())
@@ -200,7 +205,8 @@ extension MainViewController {
                 
                 self.currentDustLabel.text = "미세먼지 • 초미세먼지"
                 
-                self.weatherDetailLabel.text = "\(self.weatherList[0].description.contains("rain") ? "비가 오네요" : "비는 안오지만 혹시 모르니 우산을 챙겨주세요")"
+//                self.weatherDetailLabel.text = "\(self.weatherList[0].description.contains("rain") ? "비가 오네요" : "비는 안오지만 혹시 모르니 우산을 챙겨주세요")"
+                self.weatherDetailLabel.text = self.weatherList[0].description
             }
         }
         
@@ -208,9 +214,9 @@ extension MainViewController {
             guard let main = self.main else { return }
             
             if main.temp > value {
-                self.tempDescriptionLabel.text = "오늘은 어제보다 더 덥네요 🥵"
+                self.tempDescriptionLabel.text = "오늘은 어제보다 더 덥네요 ☀️"
             } else {
-                self.tempDescriptionLabel.text = "오늘은 어제보다 선선하네요 😙"
+                self.tempDescriptionLabel.text = "오늘은 어제보다 선선하네요 💨"
             }
         }
     }
