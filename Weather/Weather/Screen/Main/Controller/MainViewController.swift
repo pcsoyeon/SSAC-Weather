@@ -10,6 +10,21 @@ import CoreLocation
 
 class MainViewController: UIViewController {
     
+    // MARK: - UI Property
+    
+    @IBOutlet weak var dateAndTimeLabel: UILabel!
+    @IBOutlet weak var currentLocationLabel: UILabel!
+    
+    @IBOutlet weak var weatherIconImageView: UIImageView!
+    @IBOutlet weak var currentTempLabel: UILabel!
+    @IBOutlet weak var minAndMaxTempLabel: UILabel!
+    
+    @IBOutlet weak var tempDescriptionLabel: UILabel!
+    
+    @IBOutlet weak var currentDustLabel: UILabel!
+    
+    @IBOutlet weak var weatherDetailLabel: UILabel!
+    
     // MARK: - Property
     
     private let locationManager = CLLocationManager()
@@ -24,37 +39,36 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         setLocationManager()
     }
     
     // MARK: - Custom Method
     
+    private func configureUI() {
+        configureLabel()
+    }
+    
+    private func configureLabel() {
+        
+    }
+    
     private func setLocationManager() {
         locationManager.delegate = self
     }
     
-    private func callRequest(latitude: Double, longtitude: Double) {
-        MainAPIManager.shared.fetchCurrentWeather(latitude: latitude, longtitude: longtitude) { weather, main in
-            print("==================== 🟡 Weather 🟡 ====================")
-            self.weatherList = weather
-            print(self.weatherList)
-            
-            print("==================== 🟢 Main 🟢 ====================")
-            self.main = main
-            print(self.main)
-        }
+    // MARK: - IBAction
+    
+    @IBAction func touchUpShareButton(_ sender: UIButton) {
         
-        MainAPIManager.shared.fetchWeatherHistory(latitude: latitude, longtitude: longtitude) { value in
-            print("==================== 🔵 Weather History 🔵 ====================")
-            
-            guard let main = self.main else { return }
-            
-            if main.temp > value {
-                print("오늘 날씨가 더 덥습니다. 🥵")
-            } else {
-                print("오늘은 어제보다 선선하네요. 😙")
-            }
-        }
+    }
+    
+    @IBAction func touchUpAddButton(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func touchUpSettingButton(_ sender: UIButton) {
+        
     }
 }
 
@@ -135,5 +149,33 @@ extension MainViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         print(#function)
         checkUserDeviceLocationServiceAuthorization()
+    }
+}
+
+// MARK: - Network
+
+extension MainViewController {
+    private func callRequest(latitude: Double, longtitude: Double) {
+        MainAPIManager.shared.fetchCurrentWeather(latitude: latitude, longtitude: longtitude) { weather, main in
+            print("==================== 🟡 Weather 🟡 ====================")
+            self.weatherList = weather
+            print(self.weatherList)
+            
+            print("==================== 🟢 Main 🟢 ====================")
+            self.main = main
+            print(self.main)
+        }
+        
+        MainAPIManager.shared.fetchWeatherHistory(latitude: latitude, longtitude: longtitude) { value in
+            print("==================== 🔵 Weather History 🔵 ====================")
+            
+            guard let main = self.main else { return }
+            
+            if main.temp > value {
+                print("오늘 날씨가 더 덥습니다. 🥵")
+            } else {
+                print("오늘은 어제보다 선선하네요. 😙")
+            }
+        }
     }
 }
