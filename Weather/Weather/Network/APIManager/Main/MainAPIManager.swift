@@ -17,11 +17,9 @@ class MainAPIManager {
     
     private init() { }
     
-    typealias completionHandler = ([WeatherData], (MainData)) -> ()
-    
     // MARK: - Current Weather Data
     
-    func fetchCurrentWeather(latitude: Double, longtitude: Double, completionHandler: @escaping completionHandler) {
+    func fetchCurrentWeather(latitude: Double, longtitude: Double, completionHandler: @escaping ([WeatherData], (MainData)) -> ()) {
         let url = EndPoint.current.requestURL + "?lat=\(latitude)&lon=\(longtitude)&appid=\(APIKey.OpenWeather)"
         
         AF.request(url, method: .get).validate(statusCode: 200...500).responseData { response in
@@ -56,7 +54,7 @@ class MainAPIManager {
     
     // MARK: - Weather History Data
     
-    func fetchWeatherHistory(latitude: Double, longtitude: Double, completionHandler: @escaping (JSON) -> ()) {
+    func fetchWeatherHistory(latitude: Double, longtitude: Double, completionHandler: @escaping (Double) -> ()) {
         let url = EndPoint.current.requestURL + "?lat=\(latitude)&lon=\(longtitude)&appid=\(APIKey.OpenWeather)"
         
         AF.request(url, method: .get).validate(statusCode: 200...500).responseData { response in
@@ -66,7 +64,8 @@ class MainAPIManager {
                 
                 let statusCode = response.response?.statusCode ?? 500
                 if statusCode == 200 {
-                    completionHandler(json)
+                    let temp = json["main"]["temp"].doubleValue
+                    completionHandler(temp)
                 }
                 
             case .failure(let error):

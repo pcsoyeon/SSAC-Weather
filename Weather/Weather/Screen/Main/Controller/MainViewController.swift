@@ -44,9 +44,16 @@ class MainViewController: UIViewController {
             print(self.main)
         }
         
-        MainAPIManager.shared.fetchWeatherHistory(latitude: latitude, longtitude: longtitude) { json in
+        MainAPIManager.shared.fetchWeatherHistory(latitude: latitude, longtitude: longtitude) { value in
             print("==================== 🔵 Weather History 🔵 ====================")
-            print(json)
+            
+            guard let main = self.main else { return }
+            
+            if main.temp > value {
+                print("오늘 날씨가 더 덥습니다. 🥵")
+            } else {
+                print("오늘은 어제보다 선선하네요. 😙")
+            }
         }
     }
 }
