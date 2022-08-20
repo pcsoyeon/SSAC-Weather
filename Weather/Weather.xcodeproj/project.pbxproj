@@ -25,6 +25,7 @@
 		924B614228A8A2B5002804B1 /* CurrentWeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B614128A8A2B5002804B1 /* CurrentWeatherResponse.swift */; };
 		924B614428A8AB54002804B1 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B614328A8AB54002804B1 /* EndPoint.swift */; };
 		92EA678528B10BCA0097D517 /* HTTPStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EA678428B10BCA0097D517 /* HTTPStatus.swift */; };
+		92EA678728B114CD0097D517 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EA678628B114CD0097D517 /* NetworkError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		924B614128A8A2B5002804B1 /* CurrentWeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherResponse.swift; sourceTree = "<group>"; };
 		924B614328A8AB54002804B1 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		92EA678428B10BCA0097D517 /* HTTPStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatus.swift; sourceTree = "<group>"; };
+		92EA678628B114CD0097D517 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 				924B613E28A893A6002804B1 /* APIKey.swift */,
 				924B614328A8AB54002804B1 /* EndPoint.swift */,
 				92EA678428B10BCA0097D517 /* HTTPStatus.swift */,
+				92EA678628B114CD0097D517 /* NetworkError.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				924B610B28A7D6B2002804B1 /* AppDelegate.swift in Sources */,
 				924B612B28A7D7D7002804B1 /* UIImageView+Extension.swift in Sources */,
 				924B610D28A7D6B2002804B1 /* SceneDelegate.swift in Sources */,
+				92EA678728B114CD0097D517 /* NetworkError.swift in Sources */,
 				924B613128A7D837002804B1 /* URLConstant.swift in Sources */,
 				924B613528A7D889002804B1 /* MainAPIManager.swift in Sources */,
 			);

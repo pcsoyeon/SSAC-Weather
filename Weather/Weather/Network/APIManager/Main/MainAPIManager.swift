@@ -20,7 +20,7 @@ class MainAPIManager {
     // MARK: - Current Weather Data
     
     func fetchCurrentWeather(latitude: Double, longtitude: Double, completionHandler: @escaping ([WeatherData], (MainData)) -> ()) {
-        let url = EndPoint.current.requestURL + "?lat=\(latitude)&lon=\(longtitude)&appid=\(APIKey.OpenWeather)&lang=kr"
+        let url = EndPoint.current.requestURL + "?lat=\(latitude)&pplon=\(longtitude)&appid=\(APIKey.OpenWeather)&lang=kr"
         
         AF.request(url, method: .get).validate(statusCode: 200...500).responseData { response in
             switch response.result {
@@ -29,8 +29,12 @@ class MainAPIManager {
                 
                 let statusCode = HTTPStatus(statusCode: response.response?.statusCode ?? 500)
                 switch statusCode {
-                case .continueStatus, .multipleChoice, .badRequest, .internalServerError, .error:
+                case .continueStatus, .multipleChoice, .error:
                     print(statusCode)
+                case .badRequest:
+                    print(NetworkError.invalidRequest)
+                case .internalServerError:
+                    print(NetworkError.serverError)
                 case .ok:
                     let weatherList: [WeatherData] = json["weather"].arrayValue.map {
                         WeatherData(main: $0["main"].stringValue,
