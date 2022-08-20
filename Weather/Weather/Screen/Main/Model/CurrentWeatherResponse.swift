@@ -12,11 +12,6 @@ import Foundation
 struct CurrentWeatherResponse {
     let weather: [WeatherData]
     let main: [MainData]
-    
-    enum CodingKeys: String, CodingKey {
-        case weather
-        case main
-    }
 }
 
 // MARK: - Weather Data
@@ -37,13 +32,4 @@ struct MainData {
     let pressure: Int
     let temp: Double
     let tempMax: Double
-    
-    enum CodingKeys: String, CodingKey {
-        case tempMin = "temp_min"
-        case feelLike = "feels_like"
-        case humidity
-        case pressure
-        case temp
-        case tempMax = "temp_max"
-    }
 }
