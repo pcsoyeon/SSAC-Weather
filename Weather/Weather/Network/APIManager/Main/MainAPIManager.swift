@@ -27,8 +27,11 @@ class MainAPIManager {
             case .success(let value):
                 let json = JSON(value)
                 
-                let statusCode = response.response?.statusCode ?? 500
-                if statusCode == 200 {
+                let statusCode = HTTPStatus(statusCode: response.response?.statusCode ?? 500)
+                switch statusCode {
+                case .continueStatus, .multipleChoice, .badRequest, .internalServerError, .error:
+                    print(statusCode)
+                case .ok:
                     let weatherList: [WeatherData] = json["weather"].arrayValue.map {
                         WeatherData(main: $0["main"].stringValue,
                                     description: $0["description"].stringValue,
@@ -62,8 +65,11 @@ class MainAPIManager {
             case .success(let value):
                 let json = JSON(value)
                 
-                let statusCode = response.response?.statusCode ?? 500
-                if statusCode == 200 {
+                let statusCode = HTTPStatus(statusCode: response.response?.statusCode ?? 500)
+                switch statusCode {
+                case .continueStatus, .multipleChoice, .badRequest, .internalServerError, .error:
+                    print(statusCode)
+                case .ok:
                     let temp = json["main"]["temp"].doubleValue
                     completionHandler(temp)
                 }
@@ -84,18 +90,24 @@ class MainAPIManager {
             case .success(let value):
                 let json = JSON(value)
                 
-                let statusCode = response.response?.statusCode ?? 500
-                if statusCode == 200 {
-                    let data = AirPollutionResponse(co: json["list"].arrayValue[0]["components"]["co"].doubleValue,
-                                         no: json["list"].arrayValue[0]["components"]["no"].doubleValue,
-                                         no2: json["list"].arrayValue[0]["components"]["no2"].doubleValue,
-                                         o3: json["list"].arrayValue[0]["components"]["o3"].doubleValue,
-                                         so2: json["list"].arrayValue[0]["components"]["so2"].doubleValue,
-                                         pm2_5: json["list"].arrayValue[0]["components"]["pm2_5"].doubleValue,
-                                         pm10: json["list"].arrayValue[0]["components"]["pm10"].doubleValue,
-                                         nh3: json["list"].arrayValue[0]["components"]["nh3"].doubleValue)
-                    
-                    completionHandler(data)
+                let statusCode = HTTPStatus(statusCode: response.response?.statusCode ?? 500)
+                switch statusCode {
+                case .continueStatus, .multipleChoice, .badRequest, .internalServerError, .error:
+                    print(statusCode)
+                case .ok:
+                    if json["list"].arrayValue.isEmpty {
+                        print("None-Data")
+                    } else {
+                        let data = AirPollutionResponse(co: json["list"].arrayValue[0]["components"]["co"].doubleValue,
+                                             no: json["list"].arrayValue[0]["components"]["no"].doubleValue,
+                                             no2: json["list"].arrayValue[0]["components"]["no2"].doubleValue,
+                                             o3: json["list"].arrayValue[0]["components"]["o3"].doubleValue,
+                                             so2: json["list"].arrayValue[0]["components"]["so2"].doubleValue,
+                                             pm2_5: json["list"].arrayValue[0]["components"]["pm2_5"].doubleValue,
+                                             pm10: json["list"].arrayValue[0]["components"]["pm10"].doubleValue,
+                                             nh3: json["list"].arrayValue[0]["components"]["nh3"].doubleValue)
+                        completionHandler(data)
+                    }
                 }
                 
             case .failure(let error):

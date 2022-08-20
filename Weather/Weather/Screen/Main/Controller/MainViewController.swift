@@ -74,6 +74,8 @@ class MainViewController: UIViewController {
         }
         
         dateAndTimeLabel.text = formatter.string(from: Date())
+        
+        currentDustLabel.text = "미세먼지 • 초미세먼지 정보를 알 수 없어요 😥"
     }
     
     private func configureLocationLabel(latitude: Double, longtitude: Double) {
